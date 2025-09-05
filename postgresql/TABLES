@@ -1,0 +1,62 @@
+1 Table player_stats
+CREATE TABLE IF NOT EXISTS public.player_stats
+(
+    stat_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    player_id integer,
+    goals integer DEFAULT 0,
+    assists integer DEFAULT 0,
+    yellow_cards integer DEFAULT 0,
+    red_cards integer DEFAULT 0,
+    CONSTRAINT player_stats_pkey PRIMARY KEY (stat_id),
+    CONSTRAINT player_stats_player_id_fkey FOREIGN KEY (player_id)
+        REFERENCES public.players (player_id)
+)
+2  Table players
+CREATE TABLE IF NOT EXISTS public.players
+(
+    player_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    full_name character varying(100) NOT NULL,
+    "position" character varying(10),
+    team_id integer,
+    CONSTRAINT players_pkey PRIMARY KEY (player_id),
+    CONSTRAINT players_team_id_fkey FOREIGN KEY (team_id)
+        REFERENCES public.teams (team_id)
+)
+3 Table standings
+CREATE TABLE IF NOT EXISTS public.standings
+(
+    standing_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    team_id integer,
+    rank integer,
+    points integer,
+    wins integer,
+    draws integer,
+    losses integer,
+    goals_for integer,
+    goals_against integer,
+    CONSTRAINT standings_pkey PRIMARY KEY (standing_id),
+    CONSTRAINT standings_team_id_fkey FOREIGN KEY (team_id)
+        REFERENCES public.teams (team_id)
+)
+
+4 Table team_stats
+CREATE TABLE IF NOT EXISTS public.team_stats
+(
+    stat_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    team_id integer,
+    goals_scored integer,
+    goals_conceded integer,
+    penalty_goals integer,
+    clean_sheets integer,
+    CONSTRAINT team_stats_pkey PRIMARY KEY (stat_id),
+    CONSTRAINT team_stats_team_id_fkey FOREIGN KEY (team_id)
+        REFERENCES public.teams (team_id)
+)
+5 Table teams
+CREATE TABLE IF NOT EXISTS public.teams
+(
+    team_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name character varying(100) NOT NULL,
+    CONSTRAINT teams_pkey PRIMARY KEY (team_id),
+    CONSTRAINT teams_name_key UNIQUE (name)
+)
