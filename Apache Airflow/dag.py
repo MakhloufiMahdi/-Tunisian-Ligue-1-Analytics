@@ -1,64 +1,51 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 from datetime import datetime
-import psycopg2
 
 def transform_players():
-    conn = psycopg2.connect(
-        host="localhost",
-        database="ligue1",
-        user="postgres",
-        password="******"
-    )
+    hook = PostgresHook(postgres_conn_id="postgres_conn_id")
+    conn = hook.get_conn()
     cur = conn.cursor()
     cur.execute("""
-        UPDATE player_stats ps
-        SET total_contributions = ps.goals + ps.assists;
+        UPDATE player_stats
+        SET total_contributions = goals + assists;
     """)
     conn.commit()
     cur.close()
     conn.close()
 
 def transform_team_stats():
-    conn = psycopg2.connect(
-        host="localhost",
-        database="ligue1",
-        user="postgres",
-        password="******"
-    )
+    hook = PostgresHook(postgres_conn_id="postgres_conn_id")
+    conn = hook.get_conn()
     cur = conn.cursor()
     cur.execute("""
-        UPDATE team_stats ts
-        SET goal_difference = ts.goals_scored - ts.goals_conceded;
+        UPDATE team_stats
+        SET goal_difference = goals_scored - goals_conceded;
     """)
     conn.commit()
     cur.close()
     conn.close()
 
 def transform_standings():
-    conn = psycopg2.connect(
-        host="localhost",
-        database="ligue1",
-        user="postgres",
-        password="*******"
-    )
+    hook = PostgresHook(postgres_conn_id="postgres_conn_id")
+    conn = hook.get_conn()
     cur = conn.cursor()
     cur.execute("""
-        UPDATE standings s
-        SET goal_difference = s.goals_for - s.goals_against;
+        UPDATE standings
+        SET goal_difference = goals_for - goals_against;
     """)
     conn.commit()
     cur.close()
     conn.close()
 
 with DAG(
-    'ligue1',
+    dag_id='ligue1',
     start_date=datetime(2025, 1, 1),
-    schedule='@daily',
+    schedule_interval='@daily',
     catchup=False,
-    tags=['el','liguéf', 'tunisie']
+    tags=['etl', 'liguéf', 'tunisie']
 ) as dag:
-
 
     t1 = PythonOperator(task_id='transform_players', python_callable=transform_players)
     t2 = PythonOperator(task_id='transform_team_stats', python_callable=transform_team_stats)
