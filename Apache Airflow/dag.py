@@ -4,7 +4,7 @@ from airflow.providers.postgres.hooks.postgres import PostgresHook
 from datetime import datetime
 
 def transform_players():
-    hook = PostgresHook(postgres_conn_id="postgres_conn_id")
+    hook = PostgresHook(postgres_conn_id="ligue1_postgres")
     conn = hook.get_conn()
     cur = conn.cursor()
     cur.execute("""
@@ -16,7 +16,7 @@ def transform_players():
     conn.close()
 
 def transform_team_stats():
-    hook = PostgresHook(postgres_conn_id="postgres_conn_id")
+    hook = PostgresHook(postgres_conn_id="ligue1_postgres")
     conn = hook.get_conn()
     cur = conn.cursor()
     cur.execute("""
@@ -28,7 +28,7 @@ def transform_team_stats():
     conn.close()
 
 def transform_standings():
-    hook = PostgresHook(postgres_conn_id="postgres_conn_id")
+    hook = PostgresHook(postgres_conn_id="ligue1_postgres")
     conn = hook.get_conn()
     cur = conn.cursor()
     cur.execute("""
@@ -52,4 +52,6 @@ with DAG(
     t3 = PythonOperator(task_id='transform_standings', python_callable=transform_standings)
 
     t1 >> t2 >> t3
+
+    
 
