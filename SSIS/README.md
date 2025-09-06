@@ -1,4 +1,4 @@
-# This step aims to build an ETL pipeline to integrate and transform Ligue 1 data from 8 CSV files. The ETL process is implemented using SQL Server Integration Services (SSIS) and consists of the following steps:
+# This step aims to build an ETL pipeline to integrate and transform Ligue 1 data from 8 EXCEL files. The ETL process is implemented using SQL Server Integration Services (SSIS) and consists of the following steps:
 
 ## Extraction: Reading the CSV files
 
