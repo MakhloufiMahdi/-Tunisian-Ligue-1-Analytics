@@ -1,5 +1,7 @@
 # -Tunisian-Ligue-1-Analytics
 Welcome to the Tunisian Ligue 1 Analytics Project, a comprehensive data pipeline and analytics workflow covering players, teams, and match statistics from the Tunisian Ligue 1. This project demonstrates advanced web scraping, ETL, database management, Airflow orchestration, SQL analysis, and data visualization skills.
+
+
 📂 Folder Overview
 
 python/: Scraping scripts
