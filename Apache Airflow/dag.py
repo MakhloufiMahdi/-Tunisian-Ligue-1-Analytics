@@ -44,7 +44,7 @@ with DAG(
     start_date=datetime(2025, 1, 1),
     schedule_interval='@daily',
     catchup=False,
-    tags=['etl', 'liguéf', 'tunisie']
+    tags=['el', 'liguéf', 'tunisie']
 ) as dag:
 
     t1 = PythonOperator(task_id='transform_players', python_callable=transform_players)
@@ -52,3 +52,4 @@ with DAG(
     t3 = PythonOperator(task_id='transform_standings', python_callable=transform_standings)
 
     t1 >> t2 >> t3
+
