@@ -1,18 +1,19 @@
-# 📌 Contexte
-Ce DAG fait partie de projet Tunisian-Ligue-1-Analytics
-Après le chargement des données dans PostgreSQL, Apache Airflow applique des transformations automatiques pour enrichir les tables statistiques.
-# 🛠️ Objectif du DAG
+# 📌 Context
 
-Mettre à jour les contributions des joueurs (goals + assists).
+This DAG is part of the Tunisian-Ligue-1-Analytics project. After loading the data into PostgreSQL, Apache Airflow orchestrates a series of automated transformations to enrich the tables and prepare the data for visualizations and decision-making analyses.
 
-Calculer la différence de buts des équipes.
+# 🛠️ DAG Objective
 
-Mettre à jour la différence de buts dans le classement
+Update player contributions (goals + assists).
 
-# 🔄 Dépendances des tâches
+Calculate team goal differences.
+
+Update goal difference in the standings.
+
+# 🔄 Task Dependencies
 
 transform_players → transform_team_stats → transform_standings
 
-# 📅 Planification
+# 📅 Scheduling
 
-Le DAG est exécuté tous les jours à 01h00 (@daily).
+The DAG runs daily.
